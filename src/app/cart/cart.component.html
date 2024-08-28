@@ -1,0 +1,89 @@
+<app-header></app-header>
+
+<div *ngIf="token" class="container-fluid mt-5">
+  <h1 class="text-center text-danger mt-5">CART</h1>
+  <!-- item in cart  -->
+  <div class="row mt-5 mb-5">
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+      <table class="table table-bordered mt-5 shadow">
+        <thead>
+          <tr>
+            <th class="bg-secondary p-3 text-light text-center">Sl:no</th>
+            <th class="bg-secondary p-3 text-light text-center">Title</th>
+            <th class="bg-secondary p-3 text-light text-center">Image</th>
+            <th class="bg-secondary p-3 text-light text-center">Price</th>
+            <th class="bg-secondary p-3 text-light text-center">no of Items</th>
+            <th class="bg-secondary p-3 text-light text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let products of allProducts">
+            <td>1</td>
+            <td>{{products.title.slice(0,20)}}..</td>
+            <td>
+              <img
+                src={{products.image}}
+                alt="no image"
+                height="150px"
+                width="150px"
+              />
+            </td>
+            <td>${{products.price}}</td>
+            <td class="d-flex border-0 justify-content-center mt-2">
+              <button class="btn"><i class="fa-solid fa-minus"></i></button>
+              <input type="text" class="form-control w-25" />
+              <button class="btn"><i class="fa-solid fa-plus"></i></button>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-danger">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-outline-success me-1">Add more item</button>
+        <button class="btn btn-outline-danger ms-1">empty cart</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="shadow p-4 mt-5">
+        <h3 class="text-center">Cart Summery</h3>
+        <h4>Total no of products</h4>
+        <h4>Grand Total:</h4>
+        <a routerLink="/checkout"
+          ><button class="btn btn-success w-100">CheckOut</button></a
+        >
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+  <!-- no item in wishlist  -->
+  <div *ngIf="allProducts.length==0" class="row">
+    <div class="col-md-3"></div>
+    <div
+      class="col-md-6 d-flex justify-content-center align-items-center flex-column"
+    >
+      <img
+        src="https://www.adasglobal.com/img/empty-cart.png"
+        alt="no image"
+        width="100%"
+      />
+      <a routerLink="/">
+        <button class="btn btn-success mb-4 shadow">Add item to cart</button>
+      </a>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>
+
+
+<!-- //no login -->
+
+<div *ngIf="!token" class="container-fluid w-100 d-flex align-items-center flex-column justify-content-center" style="height: 100vh;">
+  <h3 class="text-center">Please LogIn</h3>
+  <a routerLink="/login"><button class="btn btn-success mt-4">Login</button></a>
+</div>

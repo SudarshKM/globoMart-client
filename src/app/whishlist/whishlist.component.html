@@ -1,0 +1,57 @@
+<app-header></app-header>
+
+<div *ngIf="token" class="container-fluid mt-5">
+  <h1 class="mt-5 text-center text-danger">WISHLIST</h1>
+  <div class="row">
+    <!-- item in wishlist  -->
+    <div class="col-md-3 p-4" *ngFor="let products of allProducts">
+      <div class="card shadow p-3 border-0 rounded-0" style="width: 18rem">
+        <img
+          src={{products.image}}
+          class="card-img-top"
+          height="300px"
+          alt="..."
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{products.title.slice(0,20)}}..</h5>
+          <p class="card-text text-center fw-bold">Price : ${{products.price}}</p>
+          <div class="d-flex justify-content-between">
+            <button (click)="addToCartButton(products)" class="btn btn-outline-success"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></button>
+            <button (click)="removeWishListItem(products._id)" class="btn btn-outline-danger"
+              ><i class="fa-solid fa-trash"></i
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- no item in wishlist  -->
+    <div *ngIf="allProducts.length==0" class="row">
+      <div class="col-md-3"></div>
+      <div
+        class="col-md-6 d-flex justify-content-center align-items-center flex-column"
+      >
+        <img
+          src="https://cdn.dribbble.com/users/530801/screenshots/2357094/present.gif"
+          alt="no image"
+          width="100%"
+        />
+        <a routerLink="/">
+          <button class="btn btn-success mb-4 shadow">
+            Add item to wishlist
+          </button>
+        </a>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="!token" class="container-fluid w-100 d-flex align-items-center flex-column justify-content-center" style="height: 100vh;">
+  <h3 class="text-center">Please LogIn</h3>
+  <a routerLink="/login"><button class="btn btn-success mt-4">Login</button></a>
+</div>
