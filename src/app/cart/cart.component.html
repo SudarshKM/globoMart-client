@@ -18,8 +18,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let products of allProducts">
-            <td>1</td>
+          <tr *ngFor="let products of allProducts ; let i=index">
+            <td>{{i+1}}</td>
             <td>{{products.title.slice(0,20)}}..</td>
             <td>
               <img
@@ -29,14 +29,14 @@
                 width="150px"
               />
             </td>
-            <td>${{products.price}}</td>
+            <td>${{products.grandTotal}}</td>
             <td class="d-flex border-0 justify-content-center mt-2">
-              <button class="btn"><i class="fa-solid fa-minus"></i></button>
-              <input type="text" class="form-control w-25" />
-              <button class="btn"><i class="fa-solid fa-plus"></i></button>
+              <button  (click)="decrement(products)" class="btn"><i class="fa-solid fa-minus"></i></button>
+              <input type="text" class="form-control w-25" [value]="products.quantity"/>
+              <button (click)="addToCartButton(products)" class="btn"><i class="fa-solid fa-plus"></i></button>
             </td>
             <td class="text-center">
-              <button class="btn btn-danger">
+              <button (click)="delete(products.id)" class="btn btn-danger">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </td>
@@ -44,15 +44,15 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-center mt-5">
-        <button class="btn btn-outline-success me-1">Add more item</button>
-        <button class="btn btn-outline-danger ms-1">empty cart</button>
+        <a routerLink="/" class="btn btn-outline-success me-1">Add more item</a>
+        <button (click)="empty()" class="btn btn-outline-danger ms-1">empty cart</button>
       </div>
     </div>
     <div class="col-md-4">
       <div class="shadow p-4 mt-5">
         <h3 class="text-center">Cart Summery</h3>
-        <h4>Total no of products</h4>
-        <h4>Grand Total:</h4>
+        <h4>Total no of products : {{allProducts.length}}</h4>
+        <h4>Grand Total:{{total}}</h4>
         <a routerLink="/checkout"
           ><button class="btn btn-success w-100">CheckOut</button></a
         >

@@ -7,11 +7,10 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ApiService {
   constructor(private http: HttpClient) {
-    if(sessionStorage.getItem('token')){
+    if (sessionStorage.getItem('token')) {
       this.getWishListCount();
-      this.getCartCount()
+      this.getCartCount();
       // console.log('hi');
-      
     }
   }
 
@@ -56,45 +55,77 @@ export class ApiService {
   //api to add to wishlist
 
   addToWishList(reqBody: any) {
-    return this.http.post(`${this.serverURL}/add-wishlist`, reqBody,this.addTokenToHeader());
+    return this.http.post(
+      `${this.serverURL}/add-wishlist`,
+      reqBody,
+      this.addTokenToHeader()
+    );
   }
 
   //api to get wishlist item
 
-  getWishListItemApi(){
-    return this.http.get(`${this.serverURL}/wishlist-items`,this.addTokenToHeader())
+  getWishListItemApi() {
+    return this.http.get(
+      `${this.serverURL}/wishlist-items`,
+      this.addTokenToHeader()
+    );
   }
 
-  getWishListCount(){
-    this.getWishListItemApi().subscribe((res:any)=>{
+  getWishListCount() {
+    this.getWishListItemApi().subscribe((res: any) => {
       // console.log(res.length);
-      
-      this.wishListCount.next(res.length)
-    })
+
+      this.wishListCount.next(res.length);
+    });
   }
 
   //api to delete wishlistItem
 
-  deleteWishListItemApi(id:any){
-    return this.http.delete(`${this.serverURL}/wishlist-items/${id}`)
+  deleteWishListItemApi(id: any) {
+    return this.http.delete(`${this.serverURL}/wishlist-items/${id}`);
+  }
+
+  //api to add to cart
+
+  addTocart(reqBody: any) {
+    return this.http.post(
+      `${this.serverURL}/add-cart`,
+      reqBody,
+      this.addTokenToHeader()
+    );
+  }
+
+  //api to get cart item
+
+  getCartItemApi() {
+    return this.http.get(
+      `${this.serverURL}/cart-items`,
+      this.addTokenToHeader()
+    );
+  }
+
+  getCartCount() {
+    this.getCartItemApi().subscribe((res: any) => {
+      this.cartCount.next(res.length);
+    });
   }
 
     //api to add to cart
 
-    addTocart(reqBody: any) {
-      return this.http.post(`${this.serverURL}/add-cart`, reqBody,this.addTokenToHeader());
+    decrementItem(reqBody: any) {
+      return this.http.put(
+        `${this.serverURL}/decrement-cart`,
+        reqBody,
+        this.addTokenToHeader()
+      );
     }
 
-  //api to get cart item
+  deleteCartItem(id: any) {
+    return this.http.delete(`${this.serverURL}/delete-cart/${id}`);
+  }
 
-    getCartItemApi(){
-      return this.http.get(`${this.serverURL}/cart-items`,this.addTokenToHeader())
-    }
 
-    getCartCount(){
-      this.getCartItemApi().subscribe((res:any)=>{
-        this.cartCount.next(res.length)
-      })
-    }
-  
+  emptyCart(){
+    return this.http.delete(`${this.serverURL}/empty-cart`,this.addTokenToHeader())
+  }
 }
